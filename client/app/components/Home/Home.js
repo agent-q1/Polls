@@ -6,7 +6,8 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      counters: []
+      counters: [],
+      name: "voting"
     };
 
     this.newCounter = this.newCounter.bind(this);
@@ -91,7 +92,7 @@ class Home extends Component {
         <ul>
           { this.state.counters.map((counter, i) => (
             <li key={i}>
-              <span>{counter.count} </span>
+              <p>{this.state.name} </p>
               <button onClick={() => this.incrementCounter(i)}>+</button>
               <button onClick={() => this.decrementCounter(i)}>-</button>
               <button onClick={() => this.deleteCounter(i)}>x</button>
