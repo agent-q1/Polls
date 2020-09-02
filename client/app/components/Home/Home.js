@@ -22,23 +22,60 @@ class Home extends Component {
     fetch('/api/counters')
       .then(res => res.json())
       .then(json => {
+        console.log(json)
         this.setState({
           counters: json
         });
       });
   }
 
+  
+
   newCounter() {
-    fetch('/api/counters', { method: 'POST' })
+    fetch(`/api/counters/${this.state.name}`, {method: 'GET'})
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+      if(json.length==0){
+        const data = {name: this.state.name};
+    console.log(data);
+    fetch('/api/counters', { method: 'POST', body: JSON.stringify(data) ,   headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    }})
       .then(res => res.json())
-      .then(json => {
+      .then(_json => {
         let data = this.state.counters;
-        data.push(json);
+        data.push(_json);
 
         this.setState({
           counters: data
         });
       });
+
+      }
+      else{
+        let index;
+
+        for(let i = 0;i< this.state.counters.length ; i++){
+          if(this.state.counters[i].id == json[0].id){
+            index = i;
+          }
+        }
+        console.log("index is")
+        console.log(index)
+        console.log(json[0])
+
+        fetch(`/api/counters/${json[0]._id}/increment`, { method: 'PUT' })
+      .then(res => res.json())
+      .then(json => {
+        this._modifyCounter(index, json);
+      });
+        
+      }
+    });
+    
+    
   }
 
   incrementCounter(index) {
@@ -70,6 +107,11 @@ class Home extends Component {
       });
   }
 
+  myChangeHandler = (event) => {
+    this.setState({name: event.target.value});
+  
+  }
+
   _modifyCounter(index, data) {
     let prevData = this.state.counters;
 
@@ -87,12 +129,13 @@ class Home extends Component {
   render() {
     return (
       <>
-        <p>Counters:</p>
+        <p>Voting Categories:</p>
 
         <ul>
           { this.state.counters.map((counter, i) => (
             <li key={i}>
-              <p>{this.state.name} </p>
+              <p>{counter.name} </p>
+              <p>{counter.count}</p>
               <button onClick={() => this.incrementCounter(i)}>+</button>
               <button onClick={() => this.decrementCounter(i)}>-</button>
               <button onClick={() => this.deleteCounter(i)}>x</button>
@@ -100,7 +143,10 @@ class Home extends Component {
           )) }
         </ul>
 
-        <button onClick={this.newCounter}>New counter</button>
+        <input type = 'text' onChange={this.myChangeHandler} />
+        <button onClick={this.newCounter}>New Voting Category</button>
+        
+        
       </>
     );
   }

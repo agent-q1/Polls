@@ -1,4 +1,5 @@
 const Counter = require('../../models/Counter');
+const { count } = require('../../models/Counter');
 
 module.exports = (app) => {
   app.get('/api/counters', (req, res, next) => {
@@ -7,9 +8,16 @@ module.exports = (app) => {
       .then((counter) => res.json(counter))
       .catch((err) => next(err));
   });
+  app.get('/api/counters/:name', (req, res, next) => {
+    Counter.find({name: req.params.name})
+      .exec()
+      .then((counter) => res.json(counter))
+      .catch((err) => next(err));
+  });
 
   app.post('/api/counters', function (req, res, next) {
     const counter = new Counter();
+    counter.name = req.body.name;
 
     counter.save()
       .then(() => res.json(counter))
