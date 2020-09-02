@@ -1,6 +1,6 @@
 # Polls
 
-Website meant to give student better insight into the market industry. Check out this draft for more details :)
+Website meant to give students better insight into the market industry. Check out this draft for more details :)
 
 https://docs.google.com/document/d/1u0JfdBME-uHwvduZjzryMevZHlFNir3ersG3YCQ_QcI/edit?usp=sharing
 
