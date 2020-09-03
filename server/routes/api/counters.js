@@ -1,7 +1,8 @@
+const express = require('express')
+const app = express.Router()
 const Counter = require('../../models/Counter');
 const { count } = require('../../models/Counter');
 
-module.exports = (app) => {
   app.get('/api/counters', (req, res, next) => {
     Counter.find()
       .exec()
@@ -56,4 +57,6 @@ module.exports = (app) => {
       })
       .catch((err) => next(err));
   });
-};
+
+
+module.exports = app

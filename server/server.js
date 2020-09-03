@@ -9,6 +9,8 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 
 const config = require('../config/config');
 const webpackConfig = require('../webpack.config');
+const session = require('express-session')
+const passport = require('passport')
 
 const isDev = process.env.NODE_ENV !== 'production';
 const port  = process.env.PORT || 8080;
@@ -26,7 +28,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // API routes
-require('./routes')(app);
+// require('./routes')(app);
+app.use('/', require('./routes/api/SignIn'))
+app.use('/', require('./routes/api/counters'))
+
+
 
 if (isDev) {
   const compiler = webpack(webpackConfig);
@@ -58,6 +64,19 @@ if (isDev) {
   });
 }
 
+// Express Session
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    // store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  })
+)
+
+
+
+
 app.listen(port, '0.0.0.0', (err) => {
   if (err) {
     console.log(err);
@@ -67,7 +86,5 @@ app.listen(port, '0.0.0.0', (err) => {
 });
 
 
-app.post('SignIn',(req,res)=>{
-  console.log(req.body)
-})
+
 module.exports = app;
