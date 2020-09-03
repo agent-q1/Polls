@@ -66,4 +66,8 @@ app.listen(port, '0.0.0.0', (err) => {
   console.info('>>> 🌎 Open http://0.0.0.0:%s/ in your browser.', port);
 });
 
+
+app.post('SignIn',(req,res)=>{
+  console.log(req.body)
+})
 module.exports = app;

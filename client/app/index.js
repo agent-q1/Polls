@@ -15,13 +15,16 @@ import Home from './components/Home/Home';
 
 import HelloWorld from './components/HelloWorld/HelloWorld';
 
+import SignIn from './components/SignIn/SignIn';
+
+
 import './styles/styles.scss';
 
 render((
   <Router>
     <App>
       <Switch>
-        <Route exact path="/" component={Home}/>
+        <Route exact path="/" component={SignIn}/>
         <Route path="/helloworld" component={HelloWorld}/>
         <Route component={NotFound}/>
       </Switch>

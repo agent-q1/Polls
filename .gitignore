@@ -7,6 +7,7 @@ config/config.js
 # Node stuff
 node_modules
 package-lock.json
+yarn.lock
 .npm
 .node_repl_history
 .lock-wscript
@@ -23,3 +24,4 @@ $RECYCLE.BIN/
 .DS_Store
 .Spotlight-V100
 .Trashes
+.cph
