@@ -4,18 +4,36 @@ const SignIn = ()=>{
 
 
     return (
-        <form method='POST' action="/SignIn" >
+        <div>
             <div>
-                <span>username:</span>
-                <input name="username"  />
+                <h1>SignIn</h1>
+                <form method='POST' action="/SignIn" >
+                    <div>
+                        <span>username:</span>
+                        <input name="username"  />
+                    </div>
+                    <div>
+                        <span>Password:</span>
+                        <input name="password" type="password" />
+                    </div>
+                    <button>SignIn</button>
+                </form>
             </div>
             <div>
-                <span>Password:</span>
-                <input name="password" type="password" />
+                <h1>SignUp</h1>
+                <form method='POST' action="/SignUp" >
+                    <div>
+                        <span>username:</span>
+                        <input name="username"  />
+                    </div>
+                    <div>
+                        <span>Password:</span>
+                        <input name="password" type="password" />
+                    </div>
+                    <button>SignIn</button>
+                </form>
             </div>
-            <button>SignIn</button>
-
-        </form>
+        </div>
     )
 }
 

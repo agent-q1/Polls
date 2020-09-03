@@ -11,7 +11,7 @@ router.use(passport.initialize())
 router.use(passport.session())
 
 
-  router.post('/SignIn', passport.authenticate('user', { failureRedirect: '/' }),
+  router.post('/', passport.authenticate('user', { failureRedirect: '/' }),
   (req, res)=> {
     // console.log(req.body)
     res.redirect('/Home');

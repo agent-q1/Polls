@@ -29,7 +29,8 @@ app.use(express.json());
 
 // API routes
 // require('./routes')(app);
-app.use('/', require('./routes/api/SignIn'))
+app.use('/SignIn', require('./routes/api/SignIn'))
+app.use('/SignUp', require('./routes/api/SignUp'))
 app.use('/', require('./routes/api/counters'))
 
 
