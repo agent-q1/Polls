@@ -4,11 +4,12 @@ const passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose')
 const User = require('../../models/User')
+const session = require('express-session')
 
 
-//Passport Middleware
-router.use(passport.initialize())
-router.use(passport.session())
+
+
+
 
 
   router.post('/', passport.authenticate('user', { failureRedirect: '/' }),

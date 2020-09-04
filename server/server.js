@@ -27,6 +27,22 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Express Session
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    // store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  })
+)
+
+
+//Passport Middleware
+app.use(passport.initialize())
+app.use(passport.session())
+
+
 // API routes
 // require('./routes')(app);
 app.use('/SignIn', require('./routes/api/SignIn'))
@@ -65,15 +81,7 @@ if (isDev) {
   });
 }
 
-// Express Session
-app.use(
-  session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
-    // store: new MongoStore({ mongooseConnection: mongoose.connection }),
-  })
-)
+
 
 
 

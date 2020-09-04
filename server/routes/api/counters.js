@@ -2,8 +2,8 @@ const express = require('express')
 const app = express.Router()
 const Counter = require('../../models/Counter');
 const { count } = require('../../models/Counter');
-
-  app.get('/api/counters', (req, res, next) => {
+const {ensureAuthenticated} = require('./auth');
+  app.get('/api/counters',ensureAuthenticated, (req, res, next) => {
     Counter.find()
       .exec()
       .then((counter) => res.json(counter))

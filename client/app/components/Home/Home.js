@@ -7,7 +7,8 @@ class Home extends Component {
 
     this.state = {
       counters: [],
-      name: "voting"
+      name: "voting",
+      auth : false
     };
 
     this.newCounter = this.newCounter.bind(this);
@@ -20,13 +21,21 @@ class Home extends Component {
 
   componentDidMount() {
     fetch('/api/counters')
-      .then(res => res.json())
+      .then(res =>{
+        if(res.status === 401){
+          this.setState({
+            auth:false
+          })
+          return res.json()
+        }else return res.json()
+      })
       .then(json => {
         console.log(json)
         this.setState({
-          counters: json
+          counters: json,
+          auth:true
         });
-      });
+      })
   }
 
   
@@ -128,6 +137,7 @@ class Home extends Component {
 
   render() {
     return (
+      (!this.state.auth)?<h1>Plz Login</h1>:
       <>
         <p>Voting Categories:</p>
 
