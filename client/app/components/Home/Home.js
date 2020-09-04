@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-
+import SignIn from '../SignIn/SignIn'
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -10,34 +10,29 @@ class Home extends Component {
       name: "voting",
       auth : false
     };
-
     this.newCounter = this.newCounter.bind(this);
     this.incrementCounter = this.incrementCounter.bind(this);
     this.decrementCounter = this.decrementCounter.bind(this);
     this.deleteCounter = this.deleteCounter.bind(this);
-
+    this.updateAuth = this.updateAuth;
     this._modifyCounter = this._modifyCounter.bind(this);
   }
+  updateAuth = (text) => {this.setState({auth:true});this.findcounter()};
 
-  componentDidMount() {
-    fetch('/api/counters')
-      .then(res =>{
-        if(res.status === 401){
-          this.setState({
-            auth:false
-          })
+  findcounter(){
+    if(this.state.auth){
+      fetch('/api/counters')
+        .then(res =>{
           return res.json()
-        }else return res.json()
-      })
-      .then(json => {
-        console.log(json)
-        this.setState({
-          counters: json,
-          auth:true
-        });
-      })
+        })
+        .then(json => {
+          console.log(json)
+          this.setState({
+            counters: json,
+          });
+        })
+    }
   }
-
   
 
   newCounter() {
@@ -137,7 +132,7 @@ class Home extends Component {
 
   render() {
     return (
-      (!this.state.auth)?<h1>Plz Login</h1>:
+      (!this.state.auth)?<SignIn update={this.updateAuth} />:
       <>
         <p>Voting Categories:</p>
 

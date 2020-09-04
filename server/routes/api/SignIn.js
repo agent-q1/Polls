@@ -9,14 +9,24 @@ const session = require('express-session')
 
 
 
-
-
-
-  router.post('/', passport.authenticate('user', { failureRedirect: '/' }),
-  (req, res)=> {
-    // console.log(req.body)
-    res.redirect('/Home');
+  router.post('/', (req, res, next)=>{
+    // console.log(req.body);
+    passport.authenticate('user', (err, user, info)=> {
+      if (err) { return next(err); }
+      if (!user) { return res.status(404).end(); }
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        return  res.status(200).end();;
+      });
+    })(req, res, next);
   });
+
+
+  // router.post('/', passport.authenticate('user', { failureRedirect: '/' }),
+  // (req, res)=> {
+  //   // console.log(req.body)
+  //   res.redirect('/Home');
+  // });
 
 
   passport.use('user',
