@@ -21,6 +21,15 @@ const session = require('express-session')
     })(req, res, next);
   });
 
+  router.get('/auth', (req, res, next)=>{
+    console.log('here')
+    if(req.isAuthenticated()){
+      res.status(200).end()
+    }else{
+      res.status(403).end()
+    }
+  });
+
 
   // router.post('/', passport.authenticate('user', { failureRedirect: '/' }),
   // (req, res)=> {

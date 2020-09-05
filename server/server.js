@@ -11,6 +11,7 @@ const config = require('../config/config');
 const webpackConfig = require('../webpack.config');
 const session = require('express-session')
 const passport = require('passport')
+const MongoStore = require('connect-mongo')(session)
 
 const isDev = process.env.NODE_ENV !== 'production';
 const port  = process.env.PORT || 8080;
@@ -33,7 +34,7 @@ app.use(
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-    // store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
   })
 )
 

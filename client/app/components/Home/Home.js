@@ -8,7 +8,8 @@ class Home extends Component {
     this.state = {
       counters: [],
       name: "voting",
-      auth : false
+      auth : false,
+      loaded:false
     };
     this.newCounter = this.newCounter.bind(this);
     this.incrementCounter = this.incrementCounter.bind(this);
@@ -31,6 +32,29 @@ class Home extends Component {
             counters: json,
           });
         })
+    }
+  }
+
+  componentDidMount(){
+    if(!this.state.loaded){
+        fetch(`/SignIn/auth`, {method: 'GET'})
+          .then((res)=>{
+              // console.log('aa')
+              this.setState({
+                loaded:true
+              })
+              if(res.status===200){
+                this.setState({
+                  auth:true
+                })
+                this.findcounter();
+              }else{
+                this.setState({
+                  auth:false
+                })
+              }
+
+          })
     }
   }
   
@@ -132,27 +156,29 @@ class Home extends Component {
 
   render() {
     return (
-      (!this.state.auth)?<SignIn update={this.updateAuth} />:
-      <>
-        <p>Voting Categories:</p>
+      (!this.state.loaded)?<h1>Loading...</h1>:(
+        (!this.state.auth)?<SignIn update={this.updateAuth} />:
+        <>
+          <p>Voting Categories:</p>
 
-        <ul>
-          { this.state.counters.map((counter, i) => (
-            <li key={i}>
-              <p>{counter.name} </p>
-              <p>{counter.count}</p>
-              <button onClick={() => this.incrementCounter(i)}>+</button>
-              <button onClick={() => this.decrementCounter(i)}>-</button>
-              <button onClick={() => this.deleteCounter(i)}>x</button>
-            </li>
-          )) }
-        </ul>
+          <ul>
+            { this.state.counters.map((counter, i) => (
+              <li key={i}>
+                <p>{counter.name} </p>
+                <p>{counter.count}</p>
+                <button onClick={() => this.incrementCounter(i)}>+</button>
+                <button onClick={() => this.decrementCounter(i)}>-</button>
+                <button onClick={() => this.deleteCounter(i)}>x</button>
+              </li>
+            )) }
+          </ul>
 
-        <input type = 'text' onChange={this.myChangeHandler} />
-        <button onClick={this.newCounter}>New Voting Category</button>
-        
-        
-      </>
+          <input type = 'text' onChange={this.myChangeHandler} />
+          <button onClick={this.newCounter}>New Voting Category</button>
+          
+          
+        </>
+      )
     );
   }
 }
