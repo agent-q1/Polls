@@ -17,6 +17,9 @@ class Home extends Component {
     this.deleteCounter = this.deleteCounter.bind(this);
     this.updateAuth = this.updateAuth;
     this._modifyCounter = this._modifyCounter.bind(this);
+    // this.logout = this.logout(this);
+
+    
   }
   updateAuth = (text) => {this.setState({auth:true});this.findcounter()};
 
@@ -154,12 +157,24 @@ class Home extends Component {
     });
   }
 
+  logout=()=>{
+    fetch(`/SignIn/Logout`,{ method: 'GET' })
+      .then((res)=>{
+        if(res.status === 200){
+          this.setState({
+            auth:false
+          })
+        }
+      })
+  }
+
   render() {
     return (
       (!this.state.loaded)?<h1>Loading...</h1>:(
         (!this.state.auth)?<SignIn update={this.updateAuth} />:
         <>
           <p>Voting Categories:</p>
+          <h4 onClick={this.logout} >Logout</h4>
 
           <ul>
             { this.state.counters.map((counter, i) => (

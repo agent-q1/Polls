@@ -4,7 +4,9 @@ const passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose')
 const User = require('../../models/User')
-const session = require('express-session')
+const session = require('express-session');
+const { route } = require('./SignUp');
+const {ensureAuthenticated} = require('./auth');
 
 
 
@@ -21,14 +23,19 @@ const session = require('express-session')
     })(req, res, next);
   });
 
-  router.get('/auth', (req, res, next)=>{
-    console.log('here')
+  router.get('/auth', (req, res)=>{
     if(req.isAuthenticated()){
       res.status(200).end()
     }else{
       res.status(403).end()
     }
   });
+
+  router.get('/Logout',(req,res)=>{
+    req.logout();
+    console.log('aa')
+    res.status(200).end();
+  })
 
 
   // router.post('/', passport.authenticate('user', { failureRedirect: '/' }),
