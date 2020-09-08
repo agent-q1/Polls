@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import SignIn from '../SignIn/SignIn'
+import Polls from '../Polls/Polls'
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -176,7 +178,7 @@ class Home extends Component {
           <p>Voting Categories:</p>
           <h4 onClick={this.logout} >Logout</h4>
 
-          <ul>
+          {/* <ul>
             { this.state.counters.map((counter, i) => (
               <li key={i}>
                 <p>{counter.name} </p>
@@ -186,10 +188,12 @@ class Home extends Component {
                 <button onClick={() => this.deleteCounter(i)}>x</button>
               </li>
             )) }
-          </ul>
+          </ul> */}
 
-          <input type = 'text' onChange={this.myChangeHandler} />
-          <button onClick={this.newCounter}>New Voting Category</button>
+          {/* <input type = 'text' onChange={this.myChangeHandler} />
+          <button onClick={this.newCounter}>New Voting Category</button> */}
+
+          <Polls auth={this.state.auth} />
           
           
         </>

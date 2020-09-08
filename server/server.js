@@ -49,6 +49,8 @@ app.use(passport.session())
 app.use('/SignIn', require('./routes/api/SignIn'))
 app.use('/SignUp', require('./routes/api/SignUp'))
 app.use('/', require('./routes/api/counters'))
+app.use('/api/Polls', require('./routes/api/Polls'))
+
 
 
 
