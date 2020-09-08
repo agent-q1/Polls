@@ -34,50 +34,45 @@ const {ensureAuthenticated} = require('./auth');
   });
   router.post('/addOption',ensureAuthenticated, (req, res, next)=> {
 
-  Poll.findByIdAndUpdate({_id:req.body.qid},{
-    $push: 
-        {options: 
-            {
-                name:req.body.name,
-            }
-        }
+    Poll.findById({_id:req.body.qid})
+      .exec()  
+      .then((poll) => {
+        poll.options.push({'name':req.body.name})
+        poll.save()
+          .then(()=>res.json({name:req.body.name}))
+          .catch((err) => next(err));
+
+        
+      })
+      .catch((err) => next(err));
   })
-  .then(() => res.json({name:req.body.name}))
-  .catch((err) => next(err));
 
-  })
-//   app.delete('/api/counters/:id',ensureAuthenticated, function (req, res, next) {
-//     Counter.findOneAndDelete({ _id: req.params.id })
-//       .exec()
-//       .then((counter) => res.json())
-//       .catch((err) => next(err));
-//   });
+  router.put('/increment',ensureAuthenticated, (req, res, next) => {
+    Poll.findById({_id: req.body.qid})
+      .exec()
+      .then((poll) => {
+        ++poll.options.id(req.body.optid).count; 
+        poll.save()
+          .then(() => res.json(poll))
+          .catch((err) => next(err));
+      })
+      .catch((err) => next(err));
+  });
 
-//   app.put('/api/counters/:id/increment',ensureAuthenticated, (req, res, next) => {
-//     Counter.findById(req.params.id)
-//       .exec()
-//       .then((counter) => {
-//         counter.count++;
+  router.put('/decrement',ensureAuthenticated, (req, res, next) => {
+    Poll.findById({_id: req.body.qid})
+      .exec()
+      .then((poll) => {
+        // console.log(poll.options.id(req.body.optid))
+        --poll.options.id(req.body.optid).count; 
 
-//         counter.save()
-//           .then(() => res.json(counter))
-//           .catch((err) => next(err));
-//       })
-//       .catch((err) => next(err));
-//   });
+        poll.save()
+          .then(() => res.json(poll))
+          .catch((err) => next(err));
+      })
+      .catch((err) => next(err));
+  });
 
-//   app.put('/api/counters/:id/decrement',ensureAuthenticated, (req, res, next) => {
-//     Counter.findById(req.params.id)
-//       .exec()
-//       .then((counter) => {
-//         counter.count--;
-
-//         counter.save()
-//           .then(() => res.json(counter))
-//           .catch((err) => next(err));
-//       })
-//       .catch((err) => next(err));
-//   });
 
 
 module.exports = router

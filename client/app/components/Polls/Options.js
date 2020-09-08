@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import 'whatwg-fetch';
+import Polls from './Polls';
 
 const Options = ({options,id})=>{
 
@@ -56,13 +57,47 @@ const Options = ({options,id})=>{
         
         
       }
+
+      const incrementCounter=(index)=>{
+        const optid = Options[index]._id;
+    
+        fetch(`/api/Polls/increment`, { method: 'PUT',headers: {
+          'Content-Type': 'application/json'}, body: JSON.stringify({qid:id,optid:optid})})
+          .then(res => res.json())
+          .then(json => {
+            setOptions(json.options)            
+          });
+      }
+
+      const decrementCounter=(index)=>{
+        const optid = Options[index]._id;
+    
+        fetch(`/api/Polls/decrement`, { method: 'PUT',headers: {
+          'Content-Type': 'application/json'}, body: JSON.stringify({qid:id,optid:optid})})
+          .then(res => res.json())
+          .then(json => {
+            setOptions(json.options)            
+          });
+      }
+    
+      // const decrementCounter=(index)=>{
+      //   const id = this.state.counters[index]._id;
+    
+      //   fetch(`/api/counters/${id}/decrement`, { method: 'PUT' })
+      //     .then(res => res.json())
+      //     .then(json => {
+      //       this._modifyCounter(index, json);
+      //     });
+      // }
       
     return (
         <>
             {Options.map((option,i)=>(
                 <li key={i}>
                     <p>{option.name}</p>
-                    {/* <button onClick={newPoll}>New Voting Poll Topic</button> */}
+                    <p>{option.count}</p>
+                    <button onClick={()=> incrementCounter(i)}>Vote</button>
+                    <button onClick={()=> decrementCounter(i)}>Remove</button>
                 </li>
             ))}
             <input type = 'text' onChange={(e)=>setName(e.target.value)} />
