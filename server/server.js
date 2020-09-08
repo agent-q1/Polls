@@ -21,7 +21,7 @@ const port  = process.env.PORT || 8080;
 // ================================================================================================
 
 // Set up Mongoose
-mongoose.connect(isDev ? config.db_dev : config.db);
+mongoose.connect(isDev ? config.db_dev : config.db,{useNewUrlParser: true,useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
 
 const app = express();
@@ -48,7 +48,7 @@ app.use(passport.session())
 // require('./routes')(app);
 app.use('/SignIn', require('./routes/api/SignIn'))
 app.use('/SignUp', require('./routes/api/SignUp'))
-app.use('/', require('./routes/api/counters'))
+// app.use('/', require('./routes/api/counters'))
 app.use('/api/Polls', require('./routes/api/Polls'))
 
 
