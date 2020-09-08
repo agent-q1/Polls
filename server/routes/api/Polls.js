@@ -5,26 +5,29 @@ const { count } = require('../../models/Counter');
 const {ensureAuthenticated} = require('./auth');
 
 
-  router.get('/',ensureAuthenticated, (req, res, next) => {
+
+router.use(ensureAuthenticated)
+
+  router.get('/', (req, res, next) => {
     Poll.find()
       .exec()
       .then((counter) => res.json(counter))
       .catch((err) => next(err));
   });
-  router.post('/checkduplication',ensureAuthenticated, (req, res, next) => {
+  router.post('/checkduplication', (req, res, next) => {
     Poll.find({name: req.body.name})
       .exec()
       .then((poll) => res.json(poll))
       .catch((err) => next(err));
   });
-  router.post('/checkduplicationopt',ensureAuthenticated, (req, res, next) => {
+  router.post('/checkduplicationopt', (req, res, next) => {
     Poll.find({_id: req.body.qid,'options.name': req.body.name})
       .exec()
       .then((poll) => res.json(poll))
       .catch((err) => next(err));
   });
 
-  router.post('/add',ensureAuthenticated,  (req, res, next)=> {
+  router.post('/add',  (req, res, next)=> {
     const poll = new Poll();
     poll.name = req.body.name;
 
@@ -32,7 +35,7 @@ const {ensureAuthenticated} = require('./auth');
       .then(() => res.json(poll))
       .catch((err) => next(err));
   });
-  router.post('/addOption',ensureAuthenticated, (req, res, next)=> {
+  router.post('/addOption', (req, res, next)=> {
 
     Poll.findById({_id:req.body.qid})
       .exec()  
@@ -47,7 +50,7 @@ const {ensureAuthenticated} = require('./auth');
       .catch((err) => next(err));
   })
 
-  router.put('/increment',ensureAuthenticated, (req, res, next) => {
+  router.put('/increment', (req, res, next) => {
     Poll.findById({_id: req.body.qid})
       .exec()
       .then((poll) => {
@@ -59,7 +62,7 @@ const {ensureAuthenticated} = require('./auth');
       .catch((err) => next(err));
   });
 
-  router.put('/decrement',ensureAuthenticated, (req, res, next) => {
+  router.put('/decrement', (req, res, next) => {
     Poll.findById({_id: req.body.qid})
       .exec()
       .then((poll) => {
