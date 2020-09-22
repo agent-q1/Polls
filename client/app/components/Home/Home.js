@@ -176,7 +176,7 @@ class Home extends Component {
         (!this.state.auth)?<SignIn update={this.updateAuth} />:
         <>
           <p>Voting Categories:</p>
-          <h4 onClick={this.logout} >Logout</h4>
+          <button onClick={this.logout} >Logout</button>
 
           {/* <ul>
             { this.state.counters.map((counter, i) => (
