@@ -15,6 +15,8 @@ import Home from './components/Home/Home';
 
 import HelloWorld from './components/HelloWorld/HelloWorld';
 
+
+
 import './styles/styles.scss';
 
 render((
@@ -22,6 +24,7 @@ render((
     <App>
       <Switch>
         <Route exact path="/" component={Home}/>
+        {/* <Route exact path="/Home" component={Home}/> */}
         <Route path="/helloworld" component={HelloWorld}/>
         <Route component={NotFound}/>
       </Switch>

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
+import SignIn from '../SignIn/SignIn'
+import Polls from '../Polls/Polls'
 
 class Home extends Component {
   constructor(props) {
@@ -7,28 +9,59 @@ class Home extends Component {
 
     this.state = {
       counters: [],
-      name: "voting"
+      name: "voting",
+      auth : false,
+      loaded:false
     };
-
     this.newCounter = this.newCounter.bind(this);
     this.incrementCounter = this.incrementCounter.bind(this);
     this.decrementCounter = this.decrementCounter.bind(this);
     this.deleteCounter = this.deleteCounter.bind(this);
-
+    this.updateAuth = this.updateAuth;
     this._modifyCounter = this._modifyCounter.bind(this);
+    // this.logout = this.logout(this);
+
+    
+  }
+  updateAuth = (text) => {this.setState({auth:true});this.findcounter()};
+
+  findcounter(){
+    if(this.state.auth){
+      fetch('/api/counters')
+        .then(res =>{
+          return res.json()
+        })
+        .then(json => {
+          console.log(json)
+          this.setState({
+            counters: json,
+          });
+        })
+    }
   }
 
-  componentDidMount() {
-    fetch('/api/counters')
-      .then(res => res.json())
-      .then(json => {
-        console.log(json)
-        this.setState({
-          counters: json
-        });
-      });
-  }
+  componentDidMount(){
+    if(!this.state.loaded){
+        fetch(`/SignIn/auth`, {method: 'GET'})
+          .then((res)=>{
+              // console.log('aa')
+              this.setState({
+                loaded:true
+              })
+              if(res.status===200){
+                this.setState({
+                  auth:true
+                })
+                this.findcounter();
+              }else{
+                this.setState({
+                  auth:false
+                })
+              }
 
+          })
+    }
+  }
   
 
   newCounter() {
@@ -126,28 +159,45 @@ class Home extends Component {
     });
   }
 
+  logout=()=>{
+    fetch(`/SignIn/Logout`,{ method: 'GET' })
+      .then((res)=>{
+        if(res.status === 200){
+          this.setState({
+            auth:false
+          })
+        }
+      })
+  }
+
   render() {
     return (
-      <>
-        <p>Voting Categories:</p>
+      (!this.state.loaded)?<h1>Loading...</h1>:(
+        (!this.state.auth)?<SignIn update={this.updateAuth} />:
+        <>
+          <p>Voting Categories:</p>
+          <h4 onClick={this.logout} >Logout</h4>
 
-        <ul>
-          { this.state.counters.map((counter, i) => (
-            <li key={i}>
-              <p>{counter.name} </p>
-              <p>{counter.count}</p>
-              <button onClick={() => this.incrementCounter(i)}>+</button>
-              <button onClick={() => this.decrementCounter(i)}>-</button>
-              <button onClick={() => this.deleteCounter(i)}>x</button>
-            </li>
-          )) }
-        </ul>
+          {/* <ul>
+            { this.state.counters.map((counter, i) => (
+              <li key={i}>
+                <p>{counter.name} </p>
+                <p>{counter.count}</p>
+                <button onClick={() => this.incrementCounter(i)}>+</button>
+                <button onClick={() => this.decrementCounter(i)}>-</button>
+                <button onClick={() => this.deleteCounter(i)}>x</button>
+              </li>
+            )) }
+          </ul> */}
 
-        <input type = 'text' onChange={this.myChangeHandler} />
-        <button onClick={this.newCounter}>New Voting Category</button>
-        
-        
-      </>
+          {/* <input type = 'text' onChange={this.myChangeHandler} />
+          <button onClick={this.newCounter}>New Voting Category</button> */}
+
+          <Polls auth={this.state.auth} />
+          
+          
+        </>
+      )
     );
   }
 }
