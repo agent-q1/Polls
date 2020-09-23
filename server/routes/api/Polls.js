@@ -90,7 +90,7 @@ router.use(ensureAuthenticated)
           const responsePoll = {
             name: poll.name,
             options: poll.options,
-            votable: false
+            votable: 'no'
           }
           console.log(responsePoll)
           poll.save()

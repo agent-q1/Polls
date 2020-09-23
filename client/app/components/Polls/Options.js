@@ -17,12 +17,6 @@ const Options = ({options,id,votable})=>{
         }
         
     },[])  
-    
-    // useEffect(()=>{
-
-
-    // })
-
 
 
 
@@ -37,7 +31,6 @@ const Options = ({options,id,votable})=>{
             console.log(data);
         fetch('/api/Polls/addOption', { method: 'POST', body: JSON.stringify(data) ,   headers: {
           'Content-Type': 'application/json'
-          // 'Content-Type': 'application/x-www-form-urlencoded',
         }})
           .then(res => res.json())
           .then(_json => {
@@ -75,8 +68,6 @@ const Options = ({options,id,votable})=>{
             
           })
           .then(json => {
-            //setVotable(json.votable)
-            console.log(json)
             setOptions(json.options)     
             setVotable(json.votable)       
           });
