@@ -84,8 +84,6 @@ const Polls = ({auth})=>{
                 </li>
                 )) }
             </ul>
-            <input type = 'text' onChange={(e)=>setName(e.target.value)} />
-            <button onClick={newPoll}>New Voting Poll Topic</button>
         </>
     );
 }

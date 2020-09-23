@@ -30,10 +30,13 @@ router.use(ensureAuthenticated)
   router.post('/add',  (req, res, next)=> {
     const poll = new Poll();
     poll.name = req.body.name;
+    poll.options = req.body.options;
 
     poll.save()
       .then(() => res.json(poll))
       .catch((err) => next(err));
+
+    
   });
   router.post('/addOption', (req, res, next)=> {
 
@@ -51,30 +54,43 @@ router.use(ensureAuthenticated)
   })
 
   router.put('/increment', (req, res, next) => {
+    const username = req.user.username
+    
     Poll.findById({_id: req.body.qid})
       .exec()
       .then((poll) => {
-        ++poll.options.id(req.body.optid).count; 
-        poll.save()
-          .then(() => res.json(poll))
-          .catch((err) => next(err));
+
+        //console.log(poll);
+        if(poll.users.includes(username)){
+          console.log("already voted")
+          res.end()
+        }
+        else{
+          ++poll.options.id(req.body.optid).count; 
+          poll.users.push(username);
+          poll.save()
+            .then(() => res.json(poll))
+            .catch((err) => next(err));
+
+        }
+       
       })
       .catch((err) => next(err));
   });
 
-  router.put('/decrement', (req, res, next) => {
-    Poll.findById({_id: req.body.qid})
-      .exec()
-      .then((poll) => {
-        // console.log(poll.options.id(req.body.optid))
-        --poll.options.id(req.body.optid).count; 
+  // router.put('/decrement', (req, res, next) => {
+  //   Poll.findById({_id: req.body.qid})
+  //     .exec()
+  //     .then((poll) => {
+  //       // console.log(poll.options.id(req.body.optid))
+  //       --poll.options.id(req.body.optid).count; 
 
-        poll.save()
-          .then(() => res.json(poll))
-          .catch((err) => next(err));
-      })
-      .catch((err) => next(err));
-  });
+  //       poll.save()
+  //         .then(() => res.json(poll))
+  //         .catch((err) => next(err));
+  //     })
+  //     .catch((err) => next(err));
+  // });
 
 
 

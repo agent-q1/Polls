@@ -58,7 +58,7 @@ const Options = ({options,id})=>{
         
       }
 
-      const incrementCounter=(index)=>{
+      const vote=(index)=>{
         const optid = Options[index]._id;
     
         fetch(`/api/Polls/increment`, { method: 'PUT',headers: {
@@ -69,16 +69,16 @@ const Options = ({options,id})=>{
           });
       }
 
-      const decrementCounter=(index)=>{
-        const optid = Options[index]._id;
+      // const decrementCounter=(index)=>{
+      //   const optid = Options[index]._id;
     
-        fetch(`/api/Polls/decrement`, { method: 'PUT',headers: {
-          'Content-Type': 'application/json'}, body: JSON.stringify({qid:id,optid:optid})})
-          .then(res => res.json())
-          .then(json => {
-            setOptions(json.options)            
-          });
-      }
+      //   fetch(`/api/Polls/decrement`, { method: 'PUT',headers: {
+      //     'Content-Type': 'application/json'}, body: JSON.stringify({qid:id,optid:optid})})
+      //     .then(res => res.json())
+      //     .then(json => {
+      //       setOptions(json.options)            
+      //     });
+      // }
     
       // const decrementCounter=(index)=>{
       //   const id = this.state.counters[index]._id;
@@ -92,16 +92,18 @@ const Options = ({options,id})=>{
       
     return (
         <>
+            
             {Options.map((option,i)=>(
                 <li key={i}>
+                
                     <p>{option.name}</p>
                     <p>{option.count}</p>
-                    <button onClick={()=> incrementCounter(i)}>Vote</button>
-                    <button onClick={()=> decrementCounter(i)}>Remove</button>
+                    
+                    <button onClick={()=> vote(i)}>Vote</button>
+                   
+                   
                 </li>
             ))}
-            <input type = 'text' onChange={(e)=>setName(e.target.value)} />
-            <button onClick={newOption}>Add Option</button>
         </>
     );
 }
