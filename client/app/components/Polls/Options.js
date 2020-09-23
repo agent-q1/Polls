@@ -10,12 +10,7 @@ const Options = ({options,id})=>{
     useMemo(()=>{
         // console.log(options)
         setOptions(options)
-    },[])
-
-
-
-
-      
+    },[])      
 
 
 
@@ -69,26 +64,6 @@ const Options = ({options,id})=>{
           });
       }
 
-      // const decrementCounter=(index)=>{
-      //   const optid = Options[index]._id;
-    
-      //   fetch(`/api/Polls/decrement`, { method: 'PUT',headers: {
-      //     'Content-Type': 'application/json'}, body: JSON.stringify({qid:id,optid:optid})})
-      //     .then(res => res.json())
-      //     .then(json => {
-      //       setOptions(json.options)            
-      //     });
-      // }
-    
-      // const decrementCounter=(index)=>{
-      //   const id = this.state.counters[index]._id;
-    
-      //   fetch(`/api/counters/${id}/decrement`, { method: 'PUT' })
-      //     .then(res => res.json())
-      //     .then(json => {
-      //       this._modifyCounter(index, json);
-      //     });
-      // }
       
     return (
         <>
