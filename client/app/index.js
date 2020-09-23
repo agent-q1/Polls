@@ -26,6 +26,7 @@ render((
         <Route exact path="/" component={Home}/>
         {/* <Route exact path="/Home" component={Home}/> */}
         <Route path="/helloworld" component={HelloWorld}/>
+        <Route path="/createPoll" component={CreatePoll}/>
         <Route component={NotFound}/>
       </Switch>
     </App>

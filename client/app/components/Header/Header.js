@@ -8,6 +8,7 @@ const Header = () => (
 
     <nav>
       <Link to="/helloworld">Hello World</Link>
+      <Link to="/createPoll">Create Poll</Link>
     </nav>
 
     <hr />
