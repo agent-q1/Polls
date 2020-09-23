@@ -16,7 +16,10 @@ const Polls = ({auth})=>{
               return res.json()
             })
             .then(json => {
-              console.log(json)
+              for(const poll of json){
+                console.log(poll)
+              }
+
               setPolls(json)
 
             })
@@ -76,7 +79,7 @@ const Polls = ({auth})=>{
                 <li key={i}>
                     <p>{poll.name}</p>
                     <ol>
-                        <Options options={poll.options} id={poll._id} />
+                        <Options options={poll.options} id={poll._id} votable={poll.votable} />
                     </ol>
 
                     {/* <button onClick={() => this.decrementCounter(i)}>-</button>

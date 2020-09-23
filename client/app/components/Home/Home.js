@@ -20,7 +20,16 @@ class Home extends Component {
   }
   updateAuth = (text) => {this.setState({auth:true});};
 
-  
+  logout=()=>{
+    fetch(`/SignIn/Logout`,{ method: 'GET' })
+      .then((res)=>{
+        if(res.status === 200){
+          this.setState({
+            auth:false
+          })
+        }
+      })
+  }
 
   componentDidMount(){
 

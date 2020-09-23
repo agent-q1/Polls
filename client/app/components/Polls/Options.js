@@ -2,15 +2,26 @@ import React, { useState, useEffect, useMemo } from 'react';
 import 'whatwg-fetch';
 import Polls from './Polls';
 
-const Options = ({options,id})=>{
+const Options = ({options,id,votable})=>{
 
     const [Options,setOptions] = useState([]);
     const [name,setName] = useState('');
+    const [Votable, setVotable] = useState('');
+    
 
     useMemo(()=>{
         // console.log(options)
         setOptions(options)
-    },[])      
+        if(votable){
+          setVotable('yes')
+        }
+        
+    },[])  
+    
+    // useEffect(()=>{
+
+
+    // })
 
 
 
@@ -58,10 +69,27 @@ const Options = ({options,id})=>{
     
         fetch(`/api/Polls/increment`, { method: 'PUT',headers: {
           'Content-Type': 'application/json'}, body: JSON.stringify({qid:id,optid:optid})})
-          .then(res => res.json())
+          .then(res => {
+            console.log(res)
+            return res.json();
+            
+          })
           .then(json => {
-            setOptions(json.options)            
+            //setVotable(json.votable)
+            console.log(json)
+            setOptions(json.options)     
+            setVotable(json.votable)       
           });
+      }
+
+      let voteButton
+
+      if(votable){
+        voteButton = <button onClick={()=> vote(i)}>Vote</button>
+
+      }
+      else {
+        voteButton = <></>
       }
 
       
@@ -74,7 +102,7 @@ const Options = ({options,id})=>{
                     <p>{option.name}</p>
                     <p>{option.count}</p>
                     
-                    <button onClick={()=> vote(i)}>Vote</button>
+                    <button disabled={Votable=='yes' ? false : true} onClick={()=> vote(i)}>Vote</button>
                    
                    
                 </li>
