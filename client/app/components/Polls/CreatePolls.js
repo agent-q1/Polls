@@ -21,6 +21,8 @@ const CreatePoll = ({auth})=>{
             }
 
         }
+
+        setName('');
         if(!alreadyExists && name!=''){
             const tempNewOption = {
                 name: name,
@@ -45,6 +47,8 @@ const CreatePoll = ({auth})=>{
         .then(json => {
           console.log(json)
           if(json.length==0){
+            setPollName('');
+            setOptions([]);
             const data = {name: pollName, options: options};
             console.log(data);
         fetch('/api/Polls/add', { method: 'POST', body: JSON.stringify(data) ,   headers: {
@@ -86,7 +90,7 @@ const CreatePoll = ({auth})=>{
 
             <p>Enter name of Poll</p>
 
-            <input type = 'text' onChange={(e)=>setPollName(e.target.value)} />            
+            <input type = 'text' onChange={(e)=>setPollName(e.target.value)} value={pollName}  />            
             
             <ul>
             {options.map((option, i)=>(
@@ -109,7 +113,7 @@ const CreatePoll = ({auth})=>{
 
             <div>
             <p>Enter option</p>
-            <input type = 'text' onChange={(e)=>setName(e.target.value)} />
+            <input type = 'text' onChange={(e)=>setName(e.target.value)} value={name} />
             </div>
             <div> <button onClick={newOption}>Add Option</button></div>
 
