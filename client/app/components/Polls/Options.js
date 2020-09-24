@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import 'whatwg-fetch';
 import Polls from './Polls';
 
-const Options = ({options,id,votable})=>{
+const Options = ({pollName, options,id,votable})=>{
 
     const [Options,setOptions] = useState([]);
     const [name,setName] = useState('');
@@ -85,20 +85,52 @@ const Options = ({options,id,votable})=>{
 
       
     return (
-        <>
+        // <div class="container">
+
+        //   <ul class = "list-group list-group-horizontal" >
             
-            {Options.map((option,i)=>(
-                <li key={i}>
+        //     {Options.map((option,i)=>(
+        //         <li class="list-group-item d-flex justify-content-between align-items-center" key={i}>
                 
-                    <p>{option.name}</p>
-                    <p>{option.count}</p>
+        //             <p>{option.name}</p>
+        //             <span class="badge badge-primary badge-pill">{option.count}</span>
                     
-                    <button disabled={Votable=='yes' ? false : true} onClick={()=> vote(i)}>Vote</button>
+        //             <button class="btn btn-light" disabled={Votable=='yes' ? false : true} onClick={()=> vote(i)}>Vote</button>
                    
                    
-                </li>
-            ))}
-        </>
+        //         </li>
+        //     ))}
+        //     </ul>
+        // </div>
+
+        <div class="col mb-4">
+           <div class="card">
+       
+                <div class="card-body">
+                    <h5 class="card-title">{pollName}</h5>
+                    <p class="card-text">Poll Description and creator go here</p>
+                    <ul class = "list-group list-group" >
+            
+                     {Options.map((option,i)=>(
+                      <li class="list-group-item d-flex justify-content-between align-items-center" key={i}>
+                       <div> <p>{option.name}</p>
+
+                       <button class="btn btn-light" disabled={Votable=='yes' ? false : true} onClick={()=> vote(i)}>Vote</button>
+                       </div> 
+
+                       <span class="badge badge-primary badge-pill">{option.count}</span>
+                      
+                    
+                       
+                   
+                   
+                       </li>
+                 ))}
+            </ul>
+                    
+                </div>
+           </div>
+        </div>
     );
 }
 

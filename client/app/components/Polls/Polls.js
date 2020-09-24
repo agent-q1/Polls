@@ -34,18 +34,15 @@ const Polls = ({auth})=>{
       
 
     return (
-        <>
-            <ul>
+      <div class="row row-cols-1 row-cols-md-2">
+            
                 {Polls.map((poll, i) => (
-                <li key={i}>
-                    <p>{poll.name}</p>
-                    <ol>
-                        <Options options={poll.options} id={poll._id} votable={poll.votable} />
-                    </ol>
-                </li>
+                
+                        <Options pollName={poll.name} options={poll.options} id={poll._id} votable={poll.votable} />
+                   
                 )) }
-            </ul>
-        </>
+            
+        </div>
     );
 }
 

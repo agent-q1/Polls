@@ -14,34 +14,42 @@ const SignIn = ({update})=>{
             })
     }
     return (
-        <div>
-            <div>
+        <div class = "container">
+         <div class = "row">
+            <div class = "col-6">
+            <div class = "col-sm-8">
                 <h1>SignIn</h1>
                 <form onSubmit={signin}>
-                    <div>
-                        <span>username:</span>
-                        <input name="username"  value={username} onChange={e => setUsername(e.target.value)}/>
+                    <div class = "form-group">
+                    <label for="Username">Username: </label>
+                        <input type="username" class="form-control" name="username" aria-describedby="emailHelp" value={username} onChange={e => setUsername(e.target.value)}/>
+                        <small id="emailHelp" class="form-text text-muted">Usernames are case-sensitive</small>
                     </div>
-                    <div>
-                        <span>Password:</span>
-                        <input name="password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
+                    <div class = "form-group">
+                    <label for="Password">Password: </label>
+                        <input name="password" class="form-control" type="password" value={password} onChange={e => setPassword(e.target.value)} />
                     </div>
-                    <button>SignIn</button>
+                    <button class = "btn btn-dark">SignIn</button>
                 </form>
+                </div>
             </div>
-            <div>
+            <div class = "col-6">
+                <div class = "col-sm-8">
                 <h1>SignUp</h1>
                 <form method='POST' action="/SignUp" >
-                    <div>
-                        <span>username:</span>
-                        <input name="username"  />
+                    <div class = "form-group">
+                    <label for="Username">Username: </label>
+                        <input  class="form-control" aria-describedby="emailHelp" name="username"  />
+                        <small id="emailHelp" class="form-text text-muted">Usernames are case-sensitive</small>
                     </div>
-                    <div>
-                        <span>Password:</span>
-                        <input name="password" type="password" />
+                    <div class = "form-group">
+                    <label for="Password">Password: </label>
+                        <input name="password" class="form-control" type="password" />
                     </div>
-                    <button>SignIn</button>
+                    <button class = "btn btn-dark">SignUp</button>
                 </form>
+                </div>
+            </div>
             </div>
         </div>
     )

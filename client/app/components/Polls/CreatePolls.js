@@ -82,18 +82,31 @@ const CreatePoll = ({auth})=>{
         <>
            
             <Status status={status}/>
+
+            <div class = "container">
+
+            <div >
             <div>
 
-            <p>Enter name of Poll</p>
+            <div class="form-group col-4">
+             <p>Enter name of Poll</p>
+             <input class="form-control" type = 'text' onChange={(e)=>setPollName(e.target.value)} />   
+             
+             </div>
 
-            <input type = 'text' onChange={(e)=>setPollName(e.target.value)} />            
             
-            <ul>
+
+                     
+            <div class="col-6">
+            <ul class = "list-group list-group ">
             {options.map((option, i)=>(
-                <li key={i}>
+              <li class="list-group-item d-flex justify-content-between align-items-center" key={i}>
+                   
                 
-                
+                <div class="form-group ">
                     <p>{option.name}</p>
+                    </div>
+                
 
                     </li>
                     
@@ -103,18 +116,25 @@ const CreatePoll = ({auth})=>{
             ))}
 
             </ul>
+            </div>
            
 
             </div>
 
-            <div>
+            <div class="form-group col-4">
             <p>Enter option</p>
-            <input type = 'text' onChange={(e)=>setName(e.target.value)} />
+            <input class="form-control" type = 'text' onChange={(e)=>setName(e.target.value)} />
+            
+            <div> <button class = "btn btn-dark" onClick={newOption}>Add Option</button></div>
+
             </div>
-            <div> <button onClick={newOption}>Add Option</button></div>
+
+            </div>
+            
 
             <div>
-            <button onClick={newPoll}>Create Poll</button></div>
+            <button class = "btn btn-dark" onClick={newPoll}>Create Poll</button></div>
+            </div>
         
            
         

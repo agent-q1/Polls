@@ -63,11 +63,13 @@ class Home extends Component {
 
   render() {
     return (
-      (!this.state.loaded)?<h1>Loading...</h1>:(
+      (!this.state.loaded)?<><div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div></>:(
         (!this.state.auth)?<SignIn update={this.updateAuth} />:
         <>
           <p>Voting Categories:</p>
-          <button onClick={this.logout} >Logout</button>
+          <button onClick={this.logout} class = "btn btn-dark">Logout</button>
 
       
 
