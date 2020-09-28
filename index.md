@@ -3,7 +3,7 @@
 This is a fun little project that me and my roommate took up where we try and make polls be the next big thing.
 
 ### Features
-- We've got the basic functionality down.
+We've got the basic functionality down.
 - There's authentication
 - There's polls (albeit not extremely beautiful)
 - There's sockets to view real time results
