@@ -41,5 +41,4 @@ npm run start:dev
 
 ## Contributors
 - Yash Agrawal 
-- Rohan Baijal
 - Suhas S
