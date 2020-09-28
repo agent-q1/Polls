@@ -1,37 +1,14 @@
-## Welcome to GitHub Pages
+## Welcome to Polls
 
-You can use the [editor on GitHub](https://github.com/agent-q1/Polls/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+This is a fun little project that me and my roommate took up where we try and make polls be the next big thing.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Features
+- We've got the basic functionality down.
+- There's authentication
+- There's polls (albeit not extremely beautiful)
+- There's sockets to view real time results
+- And a recommender system that we absolutely did not rip off of Netflix
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/agent-q1/Polls/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### We love more people
+Amidst TA202 and a huge flurry of assignments, we feel like this project might be stagnating. Hence we'd love to have you on board! Regardless of whether you're a designer, artist or even a wordpress developer.
+Check out the readme if you wanna know more geeky stuff about the  [README.md](https://github.com/agent-q1/Polls/blob/master/README.md)
