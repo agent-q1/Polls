@@ -2,21 +2,21 @@ import React, { useState, useEffect, useMemo } from 'react';
 import 'whatwg-fetch';
 import Polls from './Polls';
 
-const Options = ({options,id})=>{
+const Options = ({pollName, options,id,votable})=>{
 
     const [Options,setOptions] = useState([]);
     const [name,setName] = useState('');
+    const [Votable, setVotable] = useState('');
+    
 
     useMemo(()=>{
         // console.log(options)
         setOptions(options)
-    },[])
-
-
-
-
-      
-
+        if(votable){
+          setVotable('yes')
+        }
+        
+    },[])  
 
 
 
@@ -31,7 +31,6 @@ const Options = ({options,id})=>{
             console.log(data);
         fetch('/api/Polls/addOption', { method: 'POST', body: JSON.stringify(data) ,   headers: {
           'Content-Type': 'application/json'
-          // 'Content-Type': 'application/x-www-form-urlencoded',
         }})
           .then(res => res.json())
           .then(_json => {
@@ -58,51 +57,80 @@ const Options = ({options,id})=>{
         
       }
 
-      const incrementCounter=(index)=>{
+      const vote=(index)=>{
         const optid = Options[index]._id;
     
         fetch(`/api/Polls/increment`, { method: 'PUT',headers: {
           'Content-Type': 'application/json'}, body: JSON.stringify({qid:id,optid:optid})})
-          .then(res => res.json())
+          .then(res => {
+            console.log(res)
+            return res.json();
+            
+          })
           .then(json => {
-            setOptions(json.options)            
+            setOptions(json.options)     
+            setVotable(json.votable)       
           });
       }
 
-      const decrementCounter=(index)=>{
-        const optid = Options[index]._id;
-    
-        fetch(`/api/Polls/decrement`, { method: 'PUT',headers: {
-          'Content-Type': 'application/json'}, body: JSON.stringify({qid:id,optid:optid})})
-          .then(res => res.json())
-          .then(json => {
-            setOptions(json.options)            
-          });
+      let voteButton
+
+      if(votable){
+        voteButton = <button onClick={()=> vote(i)}>Vote</button>
+
       }
-    
-      // const decrementCounter=(index)=>{
-      //   const id = this.state.counters[index]._id;
-    
-      //   fetch(`/api/counters/${id}/decrement`, { method: 'PUT' })
-      //     .then(res => res.json())
-      //     .then(json => {
-      //       this._modifyCounter(index, json);
-      //     });
-      // }
+      else {
+        voteButton = <></>
+      }
+
       
     return (
-        <>
-            {Options.map((option,i)=>(
-                <li key={i}>
-                    <p>{option.name}</p>
-                    <p>{option.count}</p>
-                    <button onClick={()=> incrementCounter(i)}>Vote</button>
-                    <button onClick={()=> decrementCounter(i)}>Remove</button>
-                </li>
-            ))}
-            <input type = 'text' onChange={(e)=>setName(e.target.value)} />
-            <button onClick={newOption}>Add Option</button>
-        </>
+        // <div class="container">
+
+        //   <ul class = "list-group list-group-horizontal" >
+            
+        //     {Options.map((option,i)=>(
+        //         <li class="list-group-item d-flex justify-content-between align-items-center" key={i}>
+                
+        //             <p>{option.name}</p>
+        //             <span class="badge badge-primary badge-pill">{option.count}</span>
+                    
+        //             <button class="btn btn-light" disabled={Votable=='yes' ? false : true} onClick={()=> vote(i)}>Vote</button>
+                   
+                   
+        //         </li>
+        //     ))}
+        //     </ul>
+        // </div>
+
+        <div class="col mb-4">
+           <div class="card">
+       
+                <div class="card-body">
+                    <h5 class="card-title">{pollName}</h5>
+                    <p class="card-text">Poll Description and creator go here</p>
+                    <ul class = "list-group list-group" >
+            
+                     {Options.map((option,i)=>(
+                      <li class="list-group-item d-flex justify-content-between align-items-center" key={i}>
+                       <div> <p>{option.name}</p>
+
+                       <button class="btn btn-light" disabled={Votable=='yes' ? false : true} onClick={()=> vote(i)}>Vote</button>
+                       </div> 
+
+                       <span class="badge badge-primary badge-pill">{option.count}</span>
+                      
+                    
+                       
+                   
+                   
+                       </li>
+                 ))}
+            </ul>
+                    
+                </div>
+           </div>
+        </div>
     );
 }
 

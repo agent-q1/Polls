@@ -11,8 +11,11 @@ const CounterSchema = new mongoose.Schema({
   name: {
     type: String,
     default: "Unknown"
-  }
+  },
+  users: []
 });
+
+
 
 
 const PollsSchema = new mongoose.Schema({
@@ -20,7 +23,8 @@ const PollsSchema = new mongoose.Schema({
     type: String,
     default: "Unknown"
   },
-  options:[CounterSchema]
+  options:[CounterSchema],
+  users: [String]
 });
 
 
